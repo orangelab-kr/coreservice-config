@@ -1,3 +1,4 @@
+import { SplashModel } from '@prisma/client';
 import 'express';
 import { EndpointView, VersionView } from '../src';
 
@@ -6,6 +7,7 @@ declare global {
     interface Request {
       endpoints: EndpointView;
       versions: VersionView;
+      splashs: string[];
     }
   }
 }

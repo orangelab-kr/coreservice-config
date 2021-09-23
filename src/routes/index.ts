@@ -4,6 +4,7 @@ import {
   EndpointsMiddleware,
   OPCODE,
   PromiseMiddleware,
+  SplashsMiddleware,
   VersionsMiddleware,
   Wrapper,
 } from '..';
@@ -13,10 +14,20 @@ export function getRouter(): Router {
 
   router.get(
     '/',
-    PromiseMiddleware(EndpointsMiddleware(), VersionsMiddleware()),
+    PromiseMiddleware(
+      EndpointsMiddleware(),
+      VersionsMiddleware(),
+      SplashsMiddleware()
+    ),
     Wrapper(async (req, res) => {
-      const { versions, endpoints } = req;
-      res.json({ opcode: OPCODE.SUCCESS, ...clusterInfo, versions, endpoints });
+      const { versions, endpoints, splashs } = req;
+      res.json({
+        opcode: OPCODE.SUCCESS,
+        ...clusterInfo,
+        versions,
+        endpoints,
+        splashs,
+      });
     })
   );
 
@@ -35,6 +46,15 @@ export function getRouter(): Router {
     Wrapper(async (req, res) => {
       const { versions } = req;
       res.json({ opcode: OPCODE.SUCCESS, versions });
+    })
+  );
+
+  router.get(
+    '/splashs',
+    SplashsMiddleware(),
+    Wrapper(async (req, res) => {
+      const { splashs } = req;
+      res.json({ opcode: OPCODE.SUCCESS, splashs });
     })
   );
 
