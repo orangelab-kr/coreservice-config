@@ -19,5 +19,4 @@ export class Endpoint {
 
     return endpointView;
   }
-
 }

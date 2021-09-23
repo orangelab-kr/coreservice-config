@@ -25,3 +25,20 @@ model EndpointModel {
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 }
+
+enum VersionStage {
+  minimum
+  current
+}
+
+model VersionModel {
+  versionId String @id @default(uuid())
+
+  versionName String
+  versionStage VersionStage
+
+  targetVersion String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
