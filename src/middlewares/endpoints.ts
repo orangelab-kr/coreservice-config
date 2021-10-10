@@ -1,6 +1,6 @@
-import { Callback, Endpoint, Wrapper } from '..';
+import { WrapperCallback, Endpoint, Wrapper } from '..';
 
-export function EndpointsMiddleware(): Callback {
+export function EndpointsMiddleware(): WrapperCallback {
   return Wrapper(async (req, res, next) => {
     try {
       req.endpoints = await Endpoint.getEndpointViews();

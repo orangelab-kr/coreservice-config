@@ -1,23 +1,18 @@
-import { Callback, InternalError, OPCODE, Weblink, Wrapper } from '..';
+import { RESULT, Weblink, Wrapper, WrapperCallback } from '..';
 
-export function WeblinksMiddleware(): Callback {
+export function WeblinksMiddleware(): WrapperCallback {
   return Wrapper(async (req, res, next) => {
     try {
       req.weblinks = await Weblink.getWeblinks();
-    } catch (err: any) {
-      console.log(err);
-    }
+    } catch (err: any) {}
     next();
   });
 }
 
-export function WeblinkMiddleware(): Callback {
+export function WeblinkMiddleware(): WrapperCallback {
   return Wrapper(async (req, res, next) => {
     const { weblinkId } = req.params;
-    if (!weblinkId) {
-      throw new InternalError('웹링크를 찾을 수 없습니다.', OPCODE.ERROR);
-    }
-
+    if (!weblinkId) throw RESULT.CANNOT_FIND_WEBLINK();
     req.weblink = await Weblink.getWeblinkOrThrow(weblinkId);
     next();
   });

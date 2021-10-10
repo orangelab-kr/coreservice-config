@@ -1,6 +1,6 @@
-import { Callback, Version, Wrapper } from '..';
+import { WrapperCallback, Version, Wrapper } from '..';
 
-export function VersionsMiddleware(): Callback {
+export function VersionsMiddleware(): WrapperCallback {
   return Wrapper(async (req, res, next) => {
     try {
       req.versions = await Version.getVersionViews();

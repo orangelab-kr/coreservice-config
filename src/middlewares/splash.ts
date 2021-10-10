@@ -1,6 +1,6 @@
-import { Callback, Splash, Wrapper } from '..';
+import { WrapperCallback, Splash, Wrapper } from '..';
 
-export function SplashsMiddleware(): Callback {
+export function SplashsMiddleware(): WrapperCallback {
   return Wrapper(async (req, res, next) => {
     try {
       req.splashs = await Splash.getSplashViews();

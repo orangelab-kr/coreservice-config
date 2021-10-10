@@ -1,5 +1,5 @@
 import { WeblinkModel } from '@prisma/client';
-import { InternalError, OPCODE, prisma } from '..';
+import { prisma, RESULT } from '..';
 
 export class Weblink {
   public static async getWeblinks(): Promise<WeblinkModel[]> {
@@ -16,10 +16,7 @@ export class Weblink {
     weblinkId: string
   ): Promise<WeblinkModel> {
     const weblink = await Weblink.getWeblink(weblinkId);
-    if (!weblink) {
-      throw new InternalError('웹링크를 찾을 수 없습니다.', OPCODE.ERROR);
-    }
-
+    if (!weblink) throw RESULT.CANNOT_FIND_WEBLINK();
     return weblink;
   }
 }

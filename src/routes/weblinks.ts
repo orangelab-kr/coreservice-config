@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { OPCODE, WeblinksMiddleware, WeblinkMiddleware, Wrapper } from '..';
+import { RESULT, WeblinkMiddleware, WeblinksMiddleware, Wrapper } from '..';
 
 export function getWeblinksRouter(): Router {
   const router = Router();
@@ -7,18 +7,18 @@ export function getWeblinksRouter(): Router {
   router.get(
     '/',
     WeblinksMiddleware(),
-    Wrapper(async (req, res) => {
+    Wrapper(async (req) => {
       const { weblinks } = req;
-      res.json({ opcode: OPCODE.SUCCESS, weblinks });
+      throw RESULT.SUCCESS({ details: { weblinks } });
     })
   );
 
   router.get(
     '/:weblinkId',
     WeblinkMiddleware(),
-    Wrapper(async (req, res) => {
+    Wrapper(async (req) => {
       const { weblink } = req;
-      res.json({ opcode: OPCODE.SUCCESS, weblink });
+      throw RESULT.SUCCESS({ details: { weblink } });
     })
   );
 

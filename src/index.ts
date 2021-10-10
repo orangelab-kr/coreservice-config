@@ -1,7 +1,8 @@
 import cors from 'cors';
 import express from 'express';
+import i18n from 'i18n';
 import serverless from 'serverless-http';
-import { getRouter, InternalError, LoggerMiddleware, OPCODE, Wrapper } from '.';
+import { getRouter, LoggerMiddleware, RESULT, Wrapper } from '.';
 
 export * from './controllers';
 export * from './middlewares';
@@ -11,6 +12,7 @@ export * from './tools';
 const app = express();
 
 app.use(cors());
+app.use(i18n.init);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(LoggerMiddleware());
@@ -18,7 +20,7 @@ app.use('/', getRouter());
 app.all(
   '*',
   Wrapper(async () => {
-    throw new InternalError('Invalid API', OPCODE.ERROR);
+    throw RESULT.INVALID_API();
   })
 );
 
