@@ -2,6 +2,7 @@ import { Router } from 'express';
 import {
   clusterInfo,
   EndpointsMiddleware,
+  getWeblinksRouter,
   OPCODE,
   PromiseMiddleware,
   SplashsMiddleware,
@@ -9,8 +10,12 @@ import {
   Wrapper,
 } from '..';
 
+export * from './weblinks';
+
 export function getRouter(): Router {
   const router = Router();
+
+  router.use('/weblinks', getWeblinksRouter());
 
   router.get(
     '/',

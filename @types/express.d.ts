@@ -8,6 +8,8 @@ declare global {
       endpoints: EndpointView;
       versions: VersionView;
       splashs: string[];
+      weblinks: WeblinkModel[];
+      weblink: WeblinkModel;
     }
   }
 }
