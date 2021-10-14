@@ -26,8 +26,13 @@ export function getWeblinksRouter(): Router {
     '/:weblinkId/redirect',
     WeblinkMiddleware(),
     Wrapper(async (req, res) => {
-      const { url } = req.weblink;
-      res.redirect(302, url);
+      const { query, weblink } = req;
+      const url = new URL(weblink.url);
+      Object.entries(query).forEach(([key, value]: any) =>
+        url.searchParams.append(key, value)
+      );
+
+      res.redirect(302, url.href);
     })
   );
 
